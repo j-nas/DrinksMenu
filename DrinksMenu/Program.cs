@@ -1,0 +1,3 @@
+﻿using DrinksMenu;
+
+new MainMenu();
