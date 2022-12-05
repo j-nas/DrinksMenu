@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DrinksMenu
 {
     public record class DrinkList(
-        [property: JsonPropertyName("drinks")]  List<Drink> Drinks);
+        [property: JsonPropertyName("drinks")] List<Drink> Drinks);
 
     public record class Drink(
         [property: JsonPropertyName("strDrink")] string Name);

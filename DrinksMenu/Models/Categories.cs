@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace DrinksMenu
 {
     internal record class Categories(
-        [property: JsonPropertyName("drinks")] List<CategoryName> Drinks);
+        [property: JsonPropertyName("drinks")] List<Category> Drinks);
 
-    internal record class CategoryName(
+    internal record class Category(
         [property: JsonPropertyName("strCategory")] string Name);
 }
