@@ -9,7 +9,7 @@ namespace DrinksMenu
 {
     internal class MainMenu
     {
-        public MainMenu() 
+        public static void RenderMainMenu()
         {
             AnsiConsole.Write(
                 new FigletText("Drink Menu")
@@ -24,8 +24,23 @@ namespace DrinksMenu
                     {
                         "Vodka", "Gin", "Tequila", "Rye", "Rum", "Brandy", "Other"
                     }));
+            MenuSelection(selection);
 
-            AnsiConsole.WriteLine($"i love {selection}");
+
+            switch (selection)
+            {
+                case "Vodka":
+                    AnsiConsole.WriteLine("You have selected vodka");
+                    break;
+                default:
+                    break;
+            }
         }
+        public static Action MenuSelection(string selection) => selection switch
+        {
+            "Vodka" => () => { AnsiConsole.WriteLine("Vodka"); },
+            _ => () => Console.WriteLine("help")
+        };
+        
     }
 }

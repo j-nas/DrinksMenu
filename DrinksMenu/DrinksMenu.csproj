@@ -8,7 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="rest\**" />
+    <EmbeddedResource Remove="rest\**" />
+    <None Remove="rest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.45.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
