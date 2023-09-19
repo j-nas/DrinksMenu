@@ -12,16 +12,16 @@ using DrinksMenu.Models;
 
 namespace DrinksMenu
 {
-    internal class DrinkService
+    internal static class DrinkService
     {
-        private string BaseUrl { get; set; }
-        private string ListCategoriesUrlFragment { get; set; }
-        private string ListDrinksByCategoryQueryUrlFragment { get; set; }
-        private string DrinkQueryUrlFragment { get; set; }
-        private RestClient Client { get; set; }
+        private static string BaseUrl { get; set; }
+        private static string ListCategoriesUrlFragment { get; set; }
+        private static string ListDrinksByCategoryQueryUrlFragment { get; set; }
+        private static string DrinkQueryUrlFragment { get; set; }
+        private static RestClient Client { get; set; }
 
 
-        public DrinkService()
+        static DrinkService()
         {
             BaseUrl = ConfigurationManager.AppSettings.Get("baseUrl");
             ListCategoriesUrlFragment = ConfigurationManager.AppSettings.Get("listDrinkCategories");
@@ -33,7 +33,7 @@ namespace DrinksMenu
 
         }
 
-        public List<Category> GetCategories()
+        public static List<Category> GetCategories()
         {
             var request = new RestRequest(ListCategoriesUrlFragment);
             var response = Client.ExecuteAsync(request);
@@ -56,7 +56,7 @@ namespace DrinksMenu
 
 
 
-        public List<Drink> GetDrinksByCategory(string category)
+        public static List<Drink> GetDrinksByCategory(string category)
         {
             var request = new RestRequest(ListDrinksByCategoryQueryUrlFragment + category);
             var response = Client.ExecuteAsync(request);
@@ -76,7 +76,7 @@ namespace DrinksMenu
             return drinks;
         }
 
-        public DrinkDetail GetDrinkById(string id)
+        public static DrinkDetail GetDrinkById(string id)
         {
             var request = new RestRequest(DrinkQueryUrlFragment + id);
             var response = Client.ExecuteAsync(request);
