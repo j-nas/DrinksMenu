@@ -8,50 +8,52 @@ using DrinksMenu.Models;
 
 namespace DrinksMenu
 {
-    internal class TableVisualizationEngine
+    internal static class TableVisualizationEngine
     {
-        private DrinkDetail Data { get; set; }
-        private Table InfoTable { get; set; }
-        private Table InstructionsTable { get; set; }
-        public TableVisualizationEngine(DrinkDetail data)
+        public static void RenderTable(DrinkDetail data)
         {
-            Data = data;
-            InfoTable = new Table();
+            
+            var infoTable = new Table();
 
-            InfoTable.Title($"[green]{Data.strDrink}[/]");
+            infoTable.Title($"[green]{data.strDrink}[/]");
+            infoTable.AddColumn(new TableColumn("Drink Category").Centered());
+            infoTable.AddColumn(new TableColumn($"{data.strCategory}").Centered());
+            infoTable.AddRow("Glass", data.strGlass);
+            infoTable.Expand();
 
-            InfoTable.AddColumn(new TableColumn("Drink Name").Centered());
-            InfoTable.AddColumn(new TableColumn($"[green]{Data.strDrink}[/]").Centered());
-            //InfoTable.AddRow("Category", Data.strCategory);
-            //InfoTable.AddRow("Alcoholic", Data.strAlcoholic);
-            //InfoTable.AddRow("Glass", Data.strGlass);
-
-            InstructionsTable = new Table();
-            InstructionsTable.Title($"[green]{Data.strInstructions}[/]");
-            InstructionsTable.AddColumn(new TableColumn("Ingredients").Centered());
-            InstructionsTable.AddColumn(new TableColumn("Measurements").Centered());
+            var instructionsTable = new Table();
+            
+            instructionsTable.Title($"{data.strInstructions}");
+            instructionsTable.AddColumn(new TableColumn("Ingredients").Centered());
+            instructionsTable.AddColumn(new TableColumn("Measurements").Centered());
+            instructionsTable.Expand();
 
             for (int i = 1; i < 16; i++)
             {
                 string ingredient = $"strIngredient{i}";
                 string measurement = $"strMeasure{i}";
 
-                if (Data.GetType().GetProperty(ingredient).GetValue(Data, null) != null)
+                if (data.GetType().GetProperty(ingredient).GetValue(data, null) != null)
                 {
-                    string ingredientValue = Data.GetType().GetProperty(ingredient).GetValue(Data, null).ToString();
-                    string measurementValue = Data.GetType().GetProperty(measurement).GetValue(Data, null).ToString();
+                    string ingredientValue = data.GetType().GetProperty(ingredient).GetValue(data, null).ToString();
+                    string measurementValue = data.GetType().GetProperty(measurement).GetValue(data, null).ToString();
 
 
-                    InstructionsTable.AddRow(ingredientValue, measurementValue);
+                    instructionsTable.AddRow(ingredientValue, measurementValue);
                 }
             }
-        }
-        public void Render()
-        {
-            AnsiConsole.Write(new Columns(
-                new Panel(InfoTable).Expand(),
-                new Panel(InstructionsTable).Expand()
+            
+            var layout = new Panel(new Rows(
+                infoTable,
+                instructionsTable
             ));
+            layout.Expand();
+
+            AnsiConsole.Write(layout);
+            
+            AnsiConsole.WriteLine("Press enter to return to the main menu");
+            Console.ReadLine();
         }
+        
     }
 }

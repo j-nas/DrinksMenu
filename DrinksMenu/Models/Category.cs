@@ -15,6 +15,6 @@ namespace DrinksMenu.Models
     public class Categories
     {
         [JsonProperty("drinks")]
-        public List<Category> CategoriesList { get; set; }
+        public List<Category>? CategoriesList { get; set; }
     }
 }

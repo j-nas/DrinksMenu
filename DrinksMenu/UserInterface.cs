@@ -50,7 +50,7 @@ internal static class UserInterface
         {
             var selection = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[green]Select from a base liquor[/]")
+                    .Title("[green]Select from drink category [/]")
                     .PageSize(10)
                     .AddChoices(categoriesList)
                 );
@@ -82,10 +82,10 @@ internal static class UserInterface
                 );
             if (selection != "Back")
             {
-                var drinkId = drinks.FirstOrDefault(x => x.strDrink == selection).idDrink; 
+                var drinkId = drinks.FirstOrDefault(x => x.strDrink == selection).idDrink;
                 var drink = DrinkService.GetDrinkById(drinkId);
                 
-                Console.WriteLine($"{drink.strDrink} - {drink.strCategory}");
+                TableVisualizationEngine.RenderTable(drink);
             }
             
             
