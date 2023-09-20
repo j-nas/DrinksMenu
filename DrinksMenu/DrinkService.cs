@@ -76,5 +76,26 @@ namespace DrinksMenu
         }
 
 
+        public static IEnumerable<Drink> SearchDrinks(string search)
+        {
+           using var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
+           
+                       var request = new RestRequest($"search.php?s={HttpUtility.UrlEncode(search)}");
+                       var response = client.ExecuteAsync(request);
+           
+                       List<Drink> drinks = new();
+           
+                       
+                       if (response.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                       {
+                           string rawResponse = response.Result.Content;
+                           var serialize = JsonConvert.DeserializeObject<Drinks>(rawResponse);
+           
+                           drinks = serialize.drinks;
+                           return drinks;
+                       }
+           
+                       return drinks;
+        }
     }
 }

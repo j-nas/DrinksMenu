@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spectre.Console;
+﻿using Spectre.Console;
 using DrinksMenu.Models;
 
 namespace DrinksMenu
@@ -28,15 +23,15 @@ namespace DrinksMenu
             instructionsTable.AddColumn(new TableColumn("Measurements").Centered());
             instructionsTable.Expand();
 
-            for (int i = 1; i < 16; i++)
+            for (var i = 1; i < 15; i++)
             {
-                string ingredient = $"strIngredient{i}";
-                string measurement = $"strMeasure{i}";
+                var ingredient = $"strIngredient{i}";
+                var measurement = $"strMeasure{i}";
 
-                if (data.GetType().GetProperty(ingredient).GetValue(data, null) != null)
+                if (data.GetType().GetProperty(ingredient).GetValue(data, null) != null && data.GetType().GetProperty(measurement).GetValue(data, null) != null)
                 {
-                    string ingredientValue = data.GetType().GetProperty(ingredient).GetValue(data, null).ToString();
-                    string measurementValue = data.GetType().GetProperty(measurement).GetValue(data, null).ToString();
+                    var ingredientValue = data.GetType().GetProperty(ingredient).GetValue(data, null).ToString();
+                    var measurementValue = data.GetType().GetProperty(measurement).GetValue(data, null).ToString();
 
 
                     instructionsTable.AddRow(ingredientValue, measurementValue);

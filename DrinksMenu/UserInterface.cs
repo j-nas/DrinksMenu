@@ -94,6 +94,22 @@ internal static class UserInterface
     }
     private static void SearchMenu()
     {
-        throw new NotImplementedException();
+        Console.Clear();
+        var isSearchMenuRunning = true;
+        
+        while (isSearchMenuRunning)
+        {
+            var search = AnsiConsole.Ask<string>("[green]Enter a search term[/]");
+            var drinkList = DrinkService.SearchDrinks(search);
+            if (drinkList == null)
+            {
+                AnsiConsole.Write(new Markup("[red]No drinks found[/] \nPress enter to return to the main menu"));
+                Console.ReadLine();
+                isSearchMenuRunning = false;
+                return;
+            }
+            DrinkMenu(drinkList);
+            isSearchMenuRunning = false;
+        }
     }
 }
